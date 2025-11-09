@@ -14,6 +14,25 @@ import { Link } from "react-router-dom";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    console.log(e);
+    const { name, value } = e.target;
+    setUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(user);
+  };
   return (
     <div className="flex h-screen md:pt-14 md:h-[760px]">
       <div className="hidden md:block">
@@ -33,7 +52,7 @@ const Signup = () => {
             </p>
           </CardHeader>
           <CardContent>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="flex gap-3">
                 <div>
                   <Label className="m-1">First Name</Label>
@@ -42,6 +61,8 @@ const Signup = () => {
                     placeholder="First Name"
                     name="firstName"
                     className="dark:border-gray-600 dark:bg-gray-900"
+                    value={user.firstName}
+                    onChange={handleChange}
                   />
                 </div>
                 <div>
@@ -51,6 +72,8 @@ const Signup = () => {
                     placeholder="Last Name"
                     name="lastName"
                     className="dark:border-gray-600 dark:bg-gray-900"
+                    value={user.lastName}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -61,6 +84,8 @@ const Signup = () => {
                   placeholder="Enter your Email"
                   name="email"
                   className="dark:border-gray-600 dark:bg-gray-900"
+                  value={user.email}
+                  onChange={handleChange}
                 ></Input>
               </div>
               <div className="relative">
@@ -70,6 +95,8 @@ const Signup = () => {
                   placeholder="Create a password"
                   name="password"
                   className="dark:border-gray-600 dark:bg-gray-900"
+                  value={user.password}
+                  onChange={handleChange}
                 ></Input>
                 <button
                   onClick={() => {
