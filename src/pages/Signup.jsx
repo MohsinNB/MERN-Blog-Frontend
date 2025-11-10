@@ -24,7 +24,6 @@ const Signup = () => {
     password: "",
   });
   const handleChange = (e) => {
-    console.log(e);
     const { name, value } = e.target;
     setUser((prev) => ({
       ...prev,
