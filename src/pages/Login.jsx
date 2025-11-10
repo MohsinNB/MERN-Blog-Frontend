@@ -10,10 +10,48 @@ import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "../components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import axios from "axios";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(input);
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/user/login",
+        input,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      if (res.data.success) {
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  };
   return (
     <div className="flex h-screen md:pt-14 md:h-[760px]">
       <div className="hidden md:block">
@@ -33,7 +71,7 @@ const Login = () => {
             </p>
           </CardHeader>
           <CardContent>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <Label>Email</Label>
                 <Input
@@ -41,6 +79,8 @@ const Login = () => {
                   placeholder="Enter your Email"
                   name="email"
                   className="dark:border-gray-600 dark:bg-gray-900"
+                  value={input.email}
+                  onChange={handleChange}
                 ></Input>
               </div>
               <div className="relative">
@@ -50,6 +90,8 @@ const Login = () => {
                   placeholder="Enter your password"
                   name="password"
                   className="dark:border-gray-600 dark:bg-gray-900"
+                  value={input.password}
+                  onChange={handleChange}
                 ></Input>
                 <button
                   onClick={() => {

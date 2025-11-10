@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar/Navbar";
+import { Toaster } from "../src/components/ui/sonner";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,7 @@ const App = () => {
   return (
     <>
       <RouterProvider router={router} />
+      <Toaster />
     </>
   );
 };
