@@ -13,6 +13,7 @@ import { Button } from "../components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
+import { handleApiError } from "../utils/handleApiError";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -50,8 +51,7 @@ const Signup = () => {
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      handleApiError(error);
     }
   };
   return (
