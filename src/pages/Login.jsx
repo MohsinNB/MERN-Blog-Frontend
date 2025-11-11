@@ -13,10 +13,14 @@ import { Button } from "../components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
+import { handleApiError } from "../utils/handleApiError";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/authSlice.js";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -45,11 +49,12 @@ const Login = () => {
       );
       if (res.data.success) {
         navigate("/");
+        dispatch(setUser(res.data.getUser));
         toast.success(res.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      handleApiError(error);
     }
   };
   return (
@@ -57,7 +62,7 @@ const Login = () => {
       <div className="hidden md:block">
         <img className="h-[700px]" src={auth} alt="" />
       </div>
-      {/* signup form */}
+      {/* login form */}
       <div className="flex justify-center items-center flex-1 px-4 md:px-0">
         <Card className="w-full max-w-md p-6 shadow-lg rounded-2xl dark:bg-gray-800 dark:border-gray-600">
           <CardHeader>
