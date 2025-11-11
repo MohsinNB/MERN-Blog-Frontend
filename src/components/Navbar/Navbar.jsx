@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo.png";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -9,13 +9,15 @@ import { Avatar } from "../ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../redux/themeSlice";
+import { logOuthandler } from "../../utils/logoutHandler";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
   const { theme } = useSelector((store) => store.theme);
-  console.log(theme);
+
   const dispatch = useDispatch();
-  console.log(user);
+  const navigate = useNavigate();
+
   return (
     <div className="py-2 fixed w-full dark:bg-gray-800 dark:border-b-gray-600 border-b-gray-300 border-2 bg-white z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-0">
@@ -66,7 +68,13 @@ const Navbar = () => {
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
 
-                <Button>Logout</Button>
+                <Button
+                  onClick={() => {
+                    logOuthandler(dispatch, navigate);
+                  }}
+                >
+                  Logout
+                </Button>
               </div>
             ) : (
               <div className="ml-7 md:flex gap-2">
