@@ -10,12 +10,22 @@ import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../redux/themeSlice";
 import { logOuthandler } from "../../utils/logoutHandler";
+import { User, FileText, MessageSquare, PenLine } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
   const { theme } = useSelector((store) => store.theme);
 
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   return (
@@ -63,10 +73,33 @@ const Navbar = () => {
             </Button>
             {user ? (
               <div className="ml-7 flex gap-3 items-center">
-                <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Avatar>
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <User className="mr-2 h-4 w-4" /> Profile
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem>
+                      <FileText className="mr-2 h-4 w-4" /> Your Blogs
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem>
+                      <MessageSquare className="mr-2 h-4 w-4" /> Comments
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem>
+                      <PenLine className="mr-2 h-4 w-4" /> write Blogs
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
                 <Button
                   onClick={() => {
