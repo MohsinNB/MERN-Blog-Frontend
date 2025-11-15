@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "../ui/card";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import userLogo from "../../assets/user.jpg";
@@ -18,7 +18,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { useSelector } from "react-redux";
 function Profile() {
+  const { user } = useSelector((store) => store.auth);
+  const [input, setInput]= useState({})
+  // console.log(user);
   return (
     <div className="pt-20 md:ml-80 md:h-screen ">
       <div className="max-w-6xl mx-auto mt-8">
@@ -26,10 +30,10 @@ function Profile() {
           {/* image section */}
           <div className="flex flex-col items-center justify-center md:w-[400px]">
             <Avatar className="w-40 h-40 border-2">
-              <AvatarImage src={userLogo} />
+              <AvatarImage src={user.photoUrl || userLogo} />
             </Avatar>
             <h1 className="text-center font-semibold text-xl text-gray-700 dark:text-gray-300 mt-3">
-              Mern Stack Developer
+              {user.occupation || "Developer"}
             </h1>
             <div className="flex gap-4 items-center">
               <Link>
@@ -50,18 +54,16 @@ function Profile() {
           {/* info section */}
           <div>
             <h1 className="font-bold text-center md:text-start text-4x1 mb-7">
-              Welcome User !
+              Welcome {user.firstName || "User"} !
             </h1>
             <p>
-              <span className="font-semibold"> Email :</span>
-              mohammadmohsin28012005@gmail.com
+              <span className="font-semibold"> Email : </span>
+              {user.email}
             </p>
             <div className="flex flex-col gap-2 items-start justify-start my-5">
               <Label>About Me</Label>
               <p className="border dark:border-gray-600 p-6 rounded-1g">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitatio.
+                {user.bio || "Add bio to connect more people like you"}
               </p>
             </div>
 
