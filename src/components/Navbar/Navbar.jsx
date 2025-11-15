@@ -83,20 +83,28 @@ const Navbar = () => {
                   <DropdownMenuContent>
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => navigate("/dashboard/profile")}
+                    >
                       <User className="mr-2 h-4 w-4" /> Profile
                     </DropdownMenuItem>
 
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => navigate("/dashboard/your-blogs")}
+                    >
                       <FileText className="mr-2 h-4 w-4" /> Your Blogs
                     </DropdownMenuItem>
 
-                    <DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => navigate("/dashboard/comments")}
+                    >
                       <MessageSquare className="mr-2 h-4 w-4" /> Comments
                     </DropdownMenuItem>
 
-                    <DropdownMenuItem>
-                      <PenLine className="mr-2 h-4 w-4" /> write Blogs
+                    <DropdownMenuItem
+                      onClick={() => navigate("/dashboard/create-blog")}
+                    >
+                      <PenLine className="mr-2 h-4 w-4" /> write Blog
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
