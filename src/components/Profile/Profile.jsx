@@ -22,9 +22,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setLoading, setUser } from "@/redux/authSlice";
 import axios from "axios";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 function Profile() {
-  const { user } = useSelector((store) => store.auth);
+  const [open, setOpen] = useState(false);
+  const { user, loading } = useSelector((store) => store.auth);
+  // console.log("Loading from Redux:", loading);
+
   const [input, setInput] = useState({
     firstName: user?.firstName,
     lastName: user?.lastName,
@@ -48,6 +52,7 @@ function Profile() {
 
   const changeFileHandler = (e) => {
     setInput({ ...input, file: e.target.files?.[0] });
+    console.log(e);
   };
 
   const submitHandler = async (e) => {
@@ -67,7 +72,7 @@ function Profile() {
     }
     try {
       dispatch(setLoading(true));
-      console.log("axios start");
+      // console.log("axios start");
       const res = await axios.put(
         `http://localhost:8000/api/v1/user/profile/update`,
         formData,
@@ -78,15 +83,17 @@ function Profile() {
           withCredentials: true,
         }
       );
-      console.log("axios success");
+      // console.log("axios success");
       if (res.data.success) {
+        setOpen(false);
         toast.success(res.data.message);
         dispatch(setUser(res.data.user));
       }
     } catch (error) {
       console.log(error);
+      toast.error(error.response?.data?.message || "Something went wrong!");
     } finally {
-      setLoading(false);
+      dispatch(setLoading(false));
     }
   };
   return (
@@ -138,133 +145,136 @@ function Profile() {
               </div>
             </div>
 
-            <Dialog>
-              <form>
-                <DialogTrigger asChild>
-                  <Button>Edit Profile</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle className="text-center">
-                      Edit profile
-                    </DialogTitle>
-                    <DialogDescription className="text-center">
-                      Make changes to your profile here.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="flex gap-3 ">
-                    <div>
-                      <Label htmlFor="firstname">First Name</Label>
-                      <Input
-                        id="firstname"
-                        name="firstName"
-                        defaultValue="First Name"
-                        type="text"
-                        value={input.firstName}
-                        onChange={changeEventHandler}
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="lastname">Last Name</Label>
-                      <Input
-                        id="lastname"
-                        name="lastName"
-                        defaultValue="Last Name"
-                        type="text"
-                        value={input.lastName}
-                        onChange={changeEventHandler}
-                      />
-                    </div>
-                  </div>
-                  <div className="flex gap-3 ">
-                    <div>
-                      <Label htmlFor="facebook">Facebook</Label>
-                      <Input
-                        id="facebook"
-                        name="facebook"
-                        value={input.facebook}
-                        onChange={changeEventHandler}
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="instagram">Instagram</Label>
-                      <Input
-                        id="instagram"
-                        name="instagram"
-                        placeholder="Enter a URL"
-                        type="text"
-                        value={input.instagram}
-                        onChange={changeEventHandler}
-                      />
-                    </div>
-                  </div>
-                  <div className="flex gap-3 ">
-                    <div>
-                      <Label htmlFor="linkedin">Linkedin</Label>
-                      <Input
-                        id="linkedin"
-                        name="linkedin"
-                        placeholder="Enter a URL"
-                        type="text"
-                        value={input.linkedin}
-                        onChange={changeEventHandler}
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="github ">Github</Label>
-                      <Input
-                        id="github"
-                        name="github"
-                        placeholder="Enter a URL"
-                        type="text"
-                        value={input.github}
-                        onChange={changeEventHandler}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="occupation">Occupation</Label>
-                    <Input
-                      id="occupation"
-                      name="occupation"
-                      placeholder="occupation"
-                      type="text"
-                      value={input.occupation}
-                      onChange={changeEventHandler}
-                    />
-                  </div>
-                  <div>
-                    <Label className="text left">Description</Label>
-                    <Textarea
-                      id="bio"
-                      name="bio"
-                      className="col-span-3 text-gray-500"
-                      placeholder="Enter a description"
-                      value={input.bio}
-                      onChange={changeEventHandler}
-                    />
-                  </div>
-                  <div>
-                    <Label className="text left">Picture</Label>
-                    <Input
-                      id="file"
-                      type="file"
-                      accept="image/*"
-                      className="w-[277px]"
-                      onChange={changeFileHandler}
-                    ></Input>
-                  </div>
+            <Dialog open={open} onOpenChange={setOpen}>
+              <Button onClick={() => setOpen(true)}>Edit Profile</Button>
 
-                  <DialogFooter>
-                    <DialogClose asChild>
-                      <Button variant="outline">Cancel</Button>
-                    </DialogClose>
-                    <Button onClick={submitHandler} type="submit">
-                      Save changes
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </form>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle className="text-center">
+                    Edit profile
+                  </DialogTitle>
+                  <DialogDescription className="text-center">
+                    Make changes to your profile here.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="flex gap-3 ">
+                  <div>
+                    <Label htmlFor="firstname">First Name</Label>
+                    <Input
+                      id="firstname"
+                      name="firstName"
+                      defaultValue="First Name"
+                      type="text"
+                      value={input.firstName}
+                      onChange={changeEventHandler}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="lastname">Last Name</Label>
+                    <Input
+                      id="lastname"
+                      name="lastName"
+                      defaultValue="Last Name"
+                      type="text"
+                      value={input.lastName}
+                      onChange={changeEventHandler}
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-3 ">
+                  <div>
+                    <Label htmlFor="facebook">Facebook</Label>
+                    <Input
+                      id="facebook"
+                      name="facebook"
+                      value={input.facebook}
+                      onChange={changeEventHandler}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="instagram">Instagram</Label>
+                    <Input
+                      id="instagram"
+                      name="instagram"
+                      placeholder="Enter a URL"
+                      type="text"
+                      value={input.instagram}
+                      onChange={changeEventHandler}
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-3 ">
+                  <div>
+                    <Label htmlFor="linkedin">Linkedin</Label>
+                    <Input
+                      id="linkedin"
+                      name="linkedin"
+                      placeholder="Enter a URL"
+                      type="text"
+                      value={input.linkedin}
+                      onChange={changeEventHandler}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="github ">Github</Label>
+                    <Input
+                      id="github"
+                      name="github"
+                      placeholder="Enter a URL"
+                      type="text"
+                      value={input.github}
+                      onChange={changeEventHandler}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="occupation">Occupation</Label>
+                  <Input
+                    id="occupation"
+                    name="occupation"
+                    placeholder="occupation"
+                    type="text"
+                    value={input.occupation}
+                    onChange={changeEventHandler}
+                  />
+                </div>
+                <div>
+                  <Label className="text left">Description</Label>
+                  <Textarea
+                    id="bio"
+                    name="bio"
+                    className="col-span-3 text-gray-500"
+                    placeholder="Enter a description"
+                    value={input.bio}
+                    onChange={changeEventHandler}
+                  />
+                </div>
+                <div>
+                  <Label className="text left">Picture</Label>
+                  <Input
+                    id="file"
+                    type="file"
+                    accept="image/*"
+                    className="w-[277px]"
+                    onChange={changeFileHandler}
+                  ></Input>
+                </div>
+
+                <DialogFooter>
+                  <Button onClick={submitHandler}>
+                    {loading ? (
+                      <>
+                        <Loader2 className="mr-2 w-4 h-4 animate-spin" />
+                        Please wait
+                      </>
+                    ) : (
+                      "Save Changes"
+                    )}
+                  </Button>
+                </DialogFooter>
+                {/*
+                 */}
+              </DialogContent>
             </Dialog>
           </div>
         </Card>
