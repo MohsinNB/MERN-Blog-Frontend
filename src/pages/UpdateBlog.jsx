@@ -3,9 +3,9 @@ import React from "react";
 
 const UpdateBlog = () => {
   return (
-    <div className="md: ml-[320px] pt-20 px-3 pb-10 ">
+    <div className="md: ml-80 pt-20 px-3 pb-10 ">
       <div className="max-w-6x1 mx-auto mt-8">
-        <Card className="w-full bg-white dark: bg-gray-800 p-5 space-y-2">
+        <Card className="w-full bg-white dark:bg-gray-800 p-5 space-y-2">
           <h1>Basic Blog Information</h1>
           <p>
             Make changes to your blogs here. Click publish when you are done
