@@ -13,37 +13,51 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setBlog } from "@/redux/blogSlice";
+import { toast } from "sonner";
+import { setLoading } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 const CreateBlogs = () => {
-  const [form, setForm] = useState({
-    title: "",
-    category: "",
-  });
-
-  const changeHandler = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const getSelectedCategory = (value) => {
+    setCategory(value);
   };
+  const { blog, loading } = useSelector((store) => store.blog);
+  console.log(blog);
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-
+  const createBlogHandler = async () => {
     try {
+      dispatch(setLoading(true));
       const res = await axios.post(
-        "http://localhost:5000/api/blog/create",
-        form,
+        `http://localhost:8000/api/v1/blog/`,
+        { title, category },
         {
-          withCredentials: true, // important if you use cookies for auth
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
         }
       );
-
-      alert("Blog created!");
-      console.log(res.data);
+      if (res.data.success) {
+        dispatch(setBlog([...(blog || []), res.data.blog]));
+        navigate(`/dashboard/create-blog/${res.data.blog._id}`);
+        toast.success(res.data.message);
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (error) {
       console.log(error);
-      alert("Failed to create blog");
+      toast.error("something went wrong");
+    } finally {
+      dispatch(setLoading(false));
     }
   };
-
   return (
     <div className="p-4 md:pr-20 h-screen md:ml-80 pt-20">
       <Card className="md:p-10 p-4 dark:bg-gray-800">
@@ -60,11 +74,13 @@ const CreateBlogs = () => {
               type="text"
               placeholder="Your blog name"
               className=" lbg-white dark: bg-gray-700"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
           <div className="mt-4 mb-5">
             <Label className="mb-2">Category</Label>
-            <Select>
+            <Select onValueChange={getSelectedCategory}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Blog category" />
               </SelectTrigger>
@@ -85,38 +101,20 @@ const CreateBlogs = () => {
             </Select>
           </div>
           <div className="flex gap-2">
-            <Button>Create</Button>
+            <Button disabled={loading} onClick={createBlogHandler}>
+              {loading ? (
+                <>
+                  <Loader2 className="mr-1 h-4 w-4 animate-spin">
+                    please wait
+                  </Loader2>
+                </>
+              ) : (
+                "Create"
+              )}
+            </Button>
           </div>
         </div>
       </Card>
-      {/* <h2>Create Blog</h2>
-
-      <form
-        onSubmit={submitHandler}
-        style={{ display: "flex", flexDirection: "column", gap: "15px" }}
-      >
-        <input
-          type="text"
-          name="title"
-          placeholder="Blog Title"
-          value={form.title}
-          onChange={changeHandler}
-          required
-        />
-
-        <input
-          type="text"
-          name="category"
-          placeholder="Blog Category"
-          value={form.category}
-          onChange={changeHandler}
-          required
-        />
-
-        <button type="submit" style={{ padding: "10px" }}>
-          Create Blog
-        </button>
-      </form> */}
     </div>
   );
 };

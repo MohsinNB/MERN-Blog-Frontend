@@ -97,7 +97,7 @@ function Profile() {
     }
   };
   return (
-    <div className="pt-20 md:ml-80 md:h-screen ">
+    <div className="pt-20 md:ml-80 md:h-screen">
       <div className="max-w-6xl mx-auto mt-8">
         <Card className="flex md:flex-row flex-col gap-10 p-6 md:p-10 dark:bg-gray-800 mx-4 md:mx-0">
           {/* image section */}
