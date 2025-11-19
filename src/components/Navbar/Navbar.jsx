@@ -19,6 +19,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import userLogo from "../../assets/user.jpg";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
@@ -76,8 +77,10 @@ const Navbar = () => {
                 <DropdownMenu>
                   <DropdownMenuTrigger>
                     <Avatar>
-                      <AvatarImage src="https://github.com/shadcn.png" />
-                      <AvatarFallback>CN</AvatarFallback>
+                      <AvatarImage
+                        src={user.photoUrl ? user.photoUrl : userLogo}
+                      />
+                      <AvatarFallback>Picture</AvatarFallback>
                     </Avatar>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
