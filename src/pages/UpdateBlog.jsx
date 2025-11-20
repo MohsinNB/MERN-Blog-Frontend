@@ -14,17 +14,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useNavigate, useParams } from "react-router-dom";
-import clsx from "clsx";
+
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
 import axios from "axios";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 const UpdateBlog = () => {
   const editor = useRef(null);
   const navigate = useNavigate();
   const params = useParams();
   const blogId = params.blogId;
-  const { blog } = useSelector((store) => store.blog);
+  const { blog, loading } = useSelector((store) => store.blog);
   const dispatch = useDispatch();
   console.log(blog);
   const findBlog = blog.find((blog) => blog._id === blogId);
@@ -69,8 +71,23 @@ const UpdateBlog = () => {
     formData.append("file", blogData.thumbnail);
     try {
       dispatch(setLoading(true));
-      const res = await axios.put(``)
+      const res = await axios.put(
+        `http://localhost:8000/api/v1/blog/${blogId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (res.data.success) {
+        toast.success(res.data.message);
+        console.log(blogData);
+      }
     } catch (error) {
+      console.log(error);
     } finally {
       dispatch(setLoading(false));
     }
@@ -94,6 +111,8 @@ const UpdateBlog = () => {
               placeholder="Enter a title"
               name="title"
               className=" dark:border-gray-300"
+              value={blogData.title}
+              onChange={onEventChange}
             />
           </div>
           <div className="">
@@ -103,15 +122,22 @@ const UpdateBlog = () => {
               placeholder="Enter a subtitle"
               name="subtitle"
               className="dark:border-gray-300"
+              value={blogData.subtitle}
+              onChange={onEventChange}
             />
           </div>
           <div>
             <Label className="mb-1">Description</Label>
-            <JoditEditor ref={editor} />
+            <JoditEditor
+              ref={editor}
+              className="jodit-toolbar"
+              value={blogData.description}
+              onChange={(newContent) => setContent(newContent)}
+            />
           </div>
           <div>
             <Label className="mb-1.5">Category</Label>
-            <Select>
+            <Select onValueChange={selectCategory}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Blog category" />
               </SelectTrigger>
@@ -137,14 +163,30 @@ const UpdateBlog = () => {
               type="file"
               id="file"
               accept="image/*"
+              onChange={selectThumbnail}
               className="w-fit dark:border-gray-300"
             />
+            {previewThumbnail && (
+              <img
+                src={previewThumbnail}
+                className="w-64 my-2"
+                alt="Blog thumbnail"
+              />
+            )}
           </div>
           <div className="flex gap-3">
             <Button variant="outline" onClick={() => navigate(-1)}>
               Back
             </Button>
-            <Button>Save</Button>
+            <Button onClick={updateBlogHandler}>
+              {loading ? (
+                <Loader2 className="mr-2 w-4 h-4 animate-spin">
+                  Please wait
+                </Loader2>
+              ) : (
+                "Save"
+              )}
+            </Button>
           </div>
         </Card>
       </div>
