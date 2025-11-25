@@ -16,10 +16,11 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading } from "@/redux/authSlice";
+
 import axios from "axios";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { setLoading } from "@/redux/blogSlice";
 
 const UpdateBlog = () => {
   const editor = useRef(null);
@@ -178,7 +179,12 @@ const UpdateBlog = () => {
             <Button variant="outline" onClick={() => navigate(-1)}>
               Back
             </Button>
-            <Button onClick={updateBlogHandler}>
+            <Button
+              onClick={() => {
+                updateBlogHandler();
+                navigate(`/dashboard/your-blogs`);
+              }}
+            >
               {loading ? (
                 <Loader2 className="mr-2 w-4 h-4 animate-spin">
                   Please wait

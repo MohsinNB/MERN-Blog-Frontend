@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
+import { BsThreeDotsVertical } from "react-icons/bs";
 import React, { useEffect } from "react";
 import {
   Table,
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -14,9 +14,25 @@ import { Card } from "@/components/ui/card";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setBlog } from "@/redux/blogSlice";
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Edit, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 function YourBlogs() {
+  const formatDate = (index) => {
+    const date = new Date(blog[index].createdAt);
+    const formatDate = date.toLocaleDateString("en-GB");
+    return formatDate;
+  };
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { blog } = useSelector((store) => store.blog);
   console.log(blog);
   const getownBlog = async () => {
@@ -30,13 +46,28 @@ function YourBlogs() {
       }
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
+  const deleteBlog = async (id) => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:8000/api/v1/blog/delete/${id}`,
+        { withCredentials: true }
+      );
+      const remainingBlog = blog.filter((singleBlog) => singleBlog?._id !== id);
+      dispatch(setBlog(remainingBlog));
+      toast.success(res.data.message);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
     }
   };
   useEffect(() => {
     getownBlog();
   }, []);
   return (
-    <div className="pb-10 pt-20 md: ml-[320px] h-screen">
+    <div className="pb-10 pt-20 md: ml-80 h-screen">
       <div className="max-w-6x1 mx-auto mt-8">
         <Card className="w-full p-5 spax-y-2 dark:bg-gray-800">
           <Table>
@@ -46,7 +77,7 @@ function YourBlogs() {
                 <TableHead>Title</TableHead>
                 <TableHead>Category</TableHead>
                 <TableHead>Date</TableHead>
-                <TableHead className="text-right">Action</TableHead>
+                <TableHead className="text-center">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -63,8 +94,35 @@ function YourBlogs() {
                     </h1>
                   </TableCell>
                   <TableCell>{item.category}</TableCell>
-                  <TableCell>{item.createdAt}</TableCell>
-                  <TableCell className="text-right">{}</TableCell>
+                  <TableCell>{formatDate(index)}</TableCell>
+                  <TableCell className="text-center">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline">
+                          {<BsThreeDotsVertical />}
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56">
+                        <DropdownMenuItem
+                          onClick={() => {
+                            navigate(`/dashboard/create-blog/${item._id}`); //http://localhost:5173/dashboard/create-blog
+                          }}
+                        >
+                          <Edit />
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => {
+                            deleteBlog(item._id);
+                          }}
+                          className="text-red-500"
+                        >
+                          <Trash2 className="text-red-500" />
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -76,3 +134,4 @@ function YourBlogs() {
 }
 
 export default YourBlogs;
+

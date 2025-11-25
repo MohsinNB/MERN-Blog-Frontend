@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setBlog } from "@/redux/blogSlice";
 import { toast } from "sonner";
-import { setLoading } from "@/redux/authSlice";
+import { setLoading } from "@/redux/blogSlice";
 import { Loader2 } from "lucide-react";
 
 const CreateBlogs = () => {
