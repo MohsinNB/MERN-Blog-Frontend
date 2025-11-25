@@ -89,7 +89,10 @@ function YourBlogs() {
                       className="w-20 rounded-md hidden md:block"
                       alt=""
                     />
-                    <h1 className="hover:underline cursor-pointer">
+                    <h1
+                      onClick={() => navigate(`/blogs/${item._id}`)}
+                      className="hover:underline cursor-pointer"
+                    >
                       {item.title}
                     </h1>
                   </TableCell>
