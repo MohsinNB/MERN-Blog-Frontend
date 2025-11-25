@@ -73,7 +73,7 @@ const CreateBlogs = () => {
             <Input
               type="text"
               placeholder="Your blog name"
-              className=" lbg-white dark: bg-gray-700"
+              className="bg-white dark:bg-gray-700"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
