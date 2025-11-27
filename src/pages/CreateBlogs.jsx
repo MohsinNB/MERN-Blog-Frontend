@@ -29,6 +29,7 @@ const CreateBlogs = () => {
     setCategory(value);
   };
   const { blog, loading } = useSelector((store) => store.blog);
+  console.log(loading); //true
   console.log(blog);
 
   const createBlogHandler = async () => {
@@ -101,7 +102,7 @@ const CreateBlogs = () => {
             </Select>
           </div>
           <div className="flex gap-2">
-            <Button disabled={loading} onClick={createBlogHandler}>
+            <Button onClick={createBlogHandler}>
               {loading ? (
                 <>
                   <Loader2 className="mr-1 h-4 w-4 animate-spin">

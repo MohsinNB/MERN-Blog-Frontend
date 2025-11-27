@@ -34,7 +34,7 @@ function YourBlogs() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { blog } = useSelector((store) => store.blog);
-  console.log(blog);
+  // console.log(blog);
   const getownBlog = async () => {
     try {
       const res = await axios.get(
