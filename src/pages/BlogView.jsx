@@ -18,6 +18,7 @@ import { Bookmark, MessageSquare, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
 import { setBlog } from "@/redux/blogSlice";
+import { removeInlineStyles } from "@/utils/handleDiscription";
 
 function BlogView() {
   // It's a blogview section. so everything logic here is for one particular data that I get from DB.
@@ -203,7 +204,12 @@ function BlogView() {
           </p>
         </div>
         {/* discription */}
-        <p dangerouslySetInnerHTML={{ __html: selectedBlog.description }} />
+        <p
+          className="text-black dark:text-white bg-transparent"
+          dangerouslySetInnerHTML={{
+            __html: removeInlineStyles(selectedBlog.description),
+          }}
+        />
         <div className="mt-10">
           <div className="flex flex-wrap gap-5 mb-8">
             <Badge variant="secondary" className="dark:bg-gray-800">
