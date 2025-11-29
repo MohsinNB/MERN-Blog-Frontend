@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import { setLoading } from "@/redux/blogSlice";
+import { setBlog, setLoading } from "@/redux/blogSlice";
 
 const UpdateBlog = () => {
   const editor = useRef(null);
@@ -29,9 +29,10 @@ const UpdateBlog = () => {
   const blogId = params.blogId;
   const { blog, loading } = useSelector((store) => store.blog);
   const dispatch = useDispatch();
-  console.log(blog);
+  console.log("from updateBlog", blog);
   const findBlog = blog.find((blog) => blog._id === blogId);
   const [content, setContent] = useState(findBlog.description);
+  const [publish, setPublish] = useState(false);
 
   const [blogData, setBlogData] = useState({
     title: findBlog?.title,
@@ -93,6 +94,47 @@ const UpdateBlog = () => {
       dispatch(setLoading(false));
     }
   };
+
+  const togglePublishUnpublish = async () => {
+    try {
+      const res = await axios.patch(
+        `http://localhost:8000/api/v1/blog/${blogId}`,
+        {
+          // params: {
+          //   action,
+          // },
+          withCredentials: true,
+        }
+      );
+      if (res.data.success) {
+        setPublish(!publish);
+
+        toast.success(res.data.message);
+        navigate("/dashboard/your-blogs");
+      } else {
+        toast.error("failed to update");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteBlog = async () => {
+    try {
+      const res = await axios.delete(
+        `http://localhost:8000/api/v1/blog/delete/${blogId}`,
+        { withCredentials: true }
+      );
+      const remainingBlog = blog.filter(
+        (singleBlog) => singleBlog?._id !== blogId
+      );
+      dispatch(setBlog(remainingBlog));
+      toast.success(res.data.message);
+      navigate("/dashboard/your-blogs");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="md: ml-80 pt-20 px-3 pb-10 ">
       <div className="max-w-6x1 mx-auto mt-8">
@@ -101,9 +143,18 @@ const UpdateBlog = () => {
           <p>
             Make changes to your blogs here. Click publish when you are done
           </p>
+          {console.log(publish)}
           <div className="space-x-2">
-            <Button>Publish</Button>
-            <Button variant="destructive">Remove blog</Button>
+            <Button
+              onClick={() => {
+                togglePublishUnpublish(findBlog.isPublished ? "false" : "true");
+              }}
+            >
+              {findBlog?.isPublished ? "Unpublish" : "Publish"}
+            </Button>
+            <Button onClick={deleteBlog} variant="destructive">
+              Remove blog
+            </Button>
           </div>
           <div className="pt-10">
             <Label className="mb-1">Title</Label>

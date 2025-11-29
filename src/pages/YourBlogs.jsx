@@ -34,7 +34,7 @@ function YourBlogs() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { blog } = useSelector((store) => store.blog);
-  console.log(blog);
+  // console.log(blog);
   const getownBlog = async () => {
     try {
       const res = await axios.get(
@@ -89,7 +89,10 @@ function YourBlogs() {
                       className="w-20 rounded-md hidden md:block"
                       alt=""
                     />
-                    <h1 className="hover:underline cursor-pointer">
+                    <h1
+                      onClick={() => navigate(`/blogs/${item._id}`)}
+                      className="hover:underline cursor-pointer"
+                    >
                       {item.title}
                     </h1>
                   </TableCell>
