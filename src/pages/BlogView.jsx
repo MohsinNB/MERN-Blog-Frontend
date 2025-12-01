@@ -19,6 +19,8 @@ import { toast } from "sonner";
 import axios from "axios";
 import { setBlog } from "@/redux/blogSlice";
 import { removeInlineStyles } from "@/utils/handleDiscription";
+import CommentBox from "@/components/CommentBox/CommentBox";
+import { formatDate } from "@/utils/handleDate";
 
 function BlogView() {
   // It's a blogview section. so everything logic here is for one particular data that I get from DB.
@@ -36,13 +38,6 @@ function BlogView() {
   const [liked, setLiked] = useState(
     selectedBlog.likes.includes(user._id) || false
   );
-
-  const changeDateFormat = (date) => {
-    const data = new Date(date);
-    const options = { day: "numeric", month: "long", year: "numeric" };
-    const formatDate = data.toLocaleDateString("en-GB", options);
-    return formatDate;
-  };
 
   const handleShare = (blogId) => {
     const blogUrl = `${window.location.origin}/blogs/${blogId}`;
@@ -185,8 +180,7 @@ function BlogView() {
               </div>
             </div>
             <p className="text-sm text-muted-foreground">
-              Published on {changeDateFormat(selectedBlog.createdAt)}. 8 min
-              read
+              Published on {formatDate(selectedBlog.createdAt)}. 8 min read
             </p>
           </div>
         </div>
@@ -269,7 +263,9 @@ function BlogView() {
             </div>
           </div>
         </div>
-        <div></div>
+        <div>
+          <CommentBox selectedBlog={selectedBlog} />
+        </div>
       </div>
     </div>
   );

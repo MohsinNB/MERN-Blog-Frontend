@@ -126,7 +126,7 @@ const Login = () => {
                 <p className="text-center text-gray-600 dark:text-gray-300">
                   Don't have an account?
                   <Link to="/signup">
-                    <span className="m-0.5 underline cursor-pointer hover: text-gray-800 dark:hover:text-gray-100">
+                    <span className="m-0.5 underline cursor-pointer hover: text-gray-900 hover:font-semibold dark:text-gray-100 dark:hover:text-gray-400">
                       Sign up
                     </span>
                   </Link>
