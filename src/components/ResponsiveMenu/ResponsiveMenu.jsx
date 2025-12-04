@@ -1,0 +1,40 @@
+import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import React from "react";
+import { FaUserCircle } from "react-icons/fa";
+import { useSelector } from "react-redux";
+
+// eslint-disable-next-line no-unused-vars
+function ResponsiveMenu({ openNav, setOpenNav, logOutHandler }) {
+  const { user } = useSelector((store) => store.auth);
+  console.log(user);
+  return (
+    <div
+      className={`${
+        openNav ? "left-0" : "-left-full"
+      } fixed bottom-0 top-0 z-20 flex h-screen w-[75%] flex-col justify-between bg-white dark:bg-gray-800 px-8 pb-6 pt-16 text-black dark:text-gray-100 md:hidden rounded-r-xl shadow-md transition-all`}
+    >
+      <div>
+        <div className="flex items-center justify-start gap-3">
+          {user ? (
+            <Avatar className="w-14 h-14">
+              <AvatarImage
+                className="rounded-full"
+                src={user?.photoUrl}
+                size={50}
+              />
+            </Avatar>
+          ) : (
+            <FaUserCircle size={50} />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ResponsiveMenu;
+
+// <div className={ ${openNav ? "left-0": "-left-[100%]"} fixed bottom-0 top-0 z-20 flex h-screen w-[75%] flex-col
+//
+// shadow-md transition-all'}>
+// </div>

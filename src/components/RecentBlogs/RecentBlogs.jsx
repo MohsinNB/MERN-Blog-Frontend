@@ -6,9 +6,11 @@ import BlogCardList from "../BlogCard/BlogCardList";
 import { Badge } from "../ui/badge";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
 
 function RecentBlogs() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { blog } = useSelector((store) => store.blog);
   useEffect(() => {
     const getAllPublishedBlogs = async () => {
@@ -54,7 +56,11 @@ function RecentBlogs() {
               "Sports",
             ].map((item, index) => {
               return (
-                <Badge className="cursor-pointer hover:bg-gray-400" key={index}>
+                <Badge
+                  onClick={() => navigate(`/search?q=${item}`)}
+                  className="cursor-pointer hover:bg-gray-400"
+                  key={index}
+                >
                   {item}
                 </Badge>
               );
