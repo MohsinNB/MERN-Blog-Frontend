@@ -53,9 +53,15 @@ function Comments() {
               {allComments.map((item, index) => (
                 <TableRow key={index}>
                   <TableCell className="font-medium">
-                    {item.postId.title}
+                    <h1 className="md:w-full w-[70px] truncate">
+                      {item.postId.title}
+                    </h1>
                   </TableCell>
-                  <TableCell>{item.content}</TableCell>
+                  <TableCell>
+                    <h1 className="md:w-full w-[70px] truncate">
+                      {item.content}
+                    </h1>
+                  </TableCell>
                   <TableCell>{item?.userId?.firstName}</TableCell>
                   <TableCell className="text-right flex items-center justify-center">
                     <Eye

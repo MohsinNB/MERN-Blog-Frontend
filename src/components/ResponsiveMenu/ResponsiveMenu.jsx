@@ -2,8 +2,9 @@ import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Button } from "../ui/button";
 
-// eslint-disable-next-line no-unused-vars
 function ResponsiveMenu({ openNav, setOpenNav, logOutHandler }) {
   const { user } = useSelector((store) => store.auth);
   console.log(user);
@@ -26,7 +27,42 @@ function ResponsiveMenu({ openNav, setOpenNav, logOutHandler }) {
           ) : (
             <FaUserCircle size={50} />
           )}
+          <div>
+            <h1>Hello, {user?.firstName || "User"}</h1>
+            <h1 className="text-sm text-slate-500">Premium user</h1>
+          </div>
         </div>
+        <nav className="mt-12">
+          <ul className="flex flex-col gap-7 text-2xl font-semibold">
+            <Link to="/" onClick={() => setOpenNav(false)}>
+              <li className="cursor-pointer">Home</li>
+            </Link>
+            <Link to="/blogs" onClick={() => setOpenNav(false)}>
+              <li className="cursor-pointer">Blog</li>
+            </Link>
+            <Link to="/about" onClick={() => setOpenNav(false)}>
+              <li className="cursor-pointer">About</li>
+            </Link>
+            {user ? (
+              <Button
+                onClick={() => {
+                  logOutHandler(), setOpenNav(false);
+                }}
+              >
+                Logout
+              </Button>
+            ) : (
+              <Link to={"/signup"} onClick={() => setOpenNav(false)}>
+                <Button>Signup</Button>
+              </Link>
+            )}
+          </ul>
+        </nav>
+      </div>
+      <div className="pb-10">
+        <h1>
+          Made with By : <br /> Mohammad Mohsin
+        </h1>
       </div>
     </div>
   );

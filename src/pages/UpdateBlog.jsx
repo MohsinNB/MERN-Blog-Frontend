@@ -136,8 +136,8 @@ const UpdateBlog = () => {
     }
   };
   return (
-    <div className="md: ml-80 pt-20 px-3 pb-10 ">
-      <div className="max-w-6x1 mx-auto mt-8">
+    <div className="md:ml-80 pt-20 px-3 pb-10">
+      <div className="max-w-6xl mx-auto mt-8">
         <Card className="w-full bg-white dark:bg-gray-800 p-5 -space-y-4">
           <h1 className="text-4xl font-bold">Basic Blog Information</h1>
           <p>

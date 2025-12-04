@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 
@@ -60,58 +60,6 @@ function BlogView() {
     }
   };
 
-  // const likeOrDislikeHandler = async () => {
-  //   try {
-  //     // Use POST (or PUT); update URL if your backend expects GET -> keep if you must
-  //     const res = await axios.get(
-  //       `http://localhost:8000/api/v1/blog/${selectedBlog._id}/like-unlike`,
-  //       {}, // empty body
-  //       { withCredentials: true }
-  //     );
-
-  //     if (res.data.success) {
-  //       const newLiked = res.data.liked; // trust the server
-  //       setLiked(newLiked);
-
-  //       // update like count from server if provided, fallback to local toggle
-  //       const newLikesCount =
-  //         typeof res.data.likesCount === "number"
-  //           ? res.data.likesCount
-  //           : newLiked
-  //           ? blogLIke + 1
-  //           : blogLIke - 1;
-
-  //       setBlogLike(newLikesCount);
-
-  //       // update local blog list (ensure id types comparable)
-  //       const updatedBlogData = blog.map((singleBlog) => {
-  //         if (singleBlog._id.toString() === selectedBlog._id.toString()) {
-  //           const newLikesArray = newLiked
-  //             ? [...new Set([...(singleBlog.likes || []), user._id])]
-  //             : (singleBlog.likes || []).filter(
-  //                 (id) => id.toString() !== user._id.toString()
-  //               );
-
-  //           return {
-  //             ...singleBlog,
-  //             likes: newLikesArray,
-  //           };
-  //         }
-  //         return singleBlog;
-  //       });
-
-  //       dispatch(setBlog(updatedBlogData));
-  //       toast.success(res.data.message);
-  //     } else {
-  //       // handle server saying success: false
-  //       toast.error(res.data.message || "Could not toggle like");
-  //     }
-  //   } catch (error) {
-  //     console.log(error.response?.data, error.message);
-  //     console.error("likeOrDislikeHandler error:", error);
-  //     toast.error("Something went wrong while toggling like");
-  //   }
-  // };
   const likeOrDislikeHandler = async () => {
     try {
       const action = liked ? "dislike" : "like";
@@ -141,6 +89,9 @@ function BlogView() {
       toast.error(error.response.data.message);
     }
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="pt-14">
       <div className="max-w-6xl mx-auto p-10">
