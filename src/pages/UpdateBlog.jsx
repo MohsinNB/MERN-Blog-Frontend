@@ -74,7 +74,7 @@ const UpdateBlog = () => {
     try {
       dispatch(setLoading(true));
       const res = await axios.put(
-        `http://localhost:8000/api/v1/blog/${blogId}`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/blog/${blogId}`,
         formData,
         {
           headers: {
@@ -98,7 +98,7 @@ const UpdateBlog = () => {
   const togglePublishUnpublish = async () => {
     try {
       const res = await axios.patch(
-        `http://localhost:8000/api/v1/blog/${blogId}`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/blog/${blogId}`,
         {
           // params: {
           //   action,
@@ -122,7 +122,7 @@ const UpdateBlog = () => {
   const deleteBlog = async () => {
     try {
       const res = await axios.delete(
-        `http://localhost:8000/api/v1/blog/delete/${blogId}`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/blog/delete/${blogId}`,
         { withCredentials: true }
       );
       const remainingBlog = blog.filter(

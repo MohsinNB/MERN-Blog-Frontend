@@ -75,7 +75,7 @@ function Profile() {
       dispatch(setLoading(true));
       // console.log("axios start");
       const res = await axios.put(
-        `http://localhost:8000/api/v1/user/profile/update`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/user/profile/update`,
         formData,
         {
           headers: {

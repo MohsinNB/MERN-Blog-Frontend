@@ -43,7 +43,7 @@ function CommentBox({ selectedBlog }) {
   const commentHandler = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:8000/api/v1/comment/${selectedBlog._id}/create`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/comment/${selectedBlog._id}/create`,
         { content },
         {
           headers: {
@@ -77,7 +77,7 @@ function CommentBox({ selectedBlog }) {
   const deleteComment = async (id) => {
     try {
       const res = await axios.delete(
-        `http://localhost:8000/api/v1/comment/${id}/delete`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/comment/${id}/delete`,
         { withCredentials: true }
       );
       const remaining = comment.filter((C) => C?._id !== id);
@@ -91,7 +91,7 @@ function CommentBox({ selectedBlog }) {
   const editCommentHandler = async (id) => {
     try {
       const res = await axios.put(
-        `http://localhost:8000/api/v1/comment/${id}/edit`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/comment/${id}/edit`,
         { content: editedContent },
         {
           withCredentials: true,
@@ -117,7 +117,7 @@ function CommentBox({ selectedBlog }) {
   const likeCommentHandler = async (id) => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/v1/comment/${id}/like`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/comment/${id}/like`,
 
         {
           withCredentials: true,
@@ -141,7 +141,7 @@ function CommentBox({ selectedBlog }) {
     const getAllCommentsOfBlog = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/v1/comment/${selectedBlog._id}/all`
+          `https://mern-blog-backend-ha5m.onrender.com/api/v1/comment/${selectedBlog._id}/all`
         );
         const data = res.data.comments;
         dispatch(setComment(data));

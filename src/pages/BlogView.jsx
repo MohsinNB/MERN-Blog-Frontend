@@ -64,7 +64,7 @@ function BlogView() {
     try {
       const action = liked ? "dislike" : "like";
       const res = await axios.get(
-        `http://localhost:8000/api/v1/blog/${selectedBlog._id}/${action}`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/blog/${selectedBlog._id}/${action}`,
         { withCredentials: true }
       );
       if (res.data.success) {

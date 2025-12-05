@@ -20,7 +20,7 @@ function Comments() {
   const getAllComments = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/v1/comment/my-blogs/comments`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/comment/my-blogs/comments`,
         { withCredentials: true }
       );
       if (res.data.success) {

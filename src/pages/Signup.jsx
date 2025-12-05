@@ -42,7 +42,7 @@ const Signup = () => {
     try {
       dispatch(setLoading(true));
       const res = await axios.post(
-        "http://localhost:8000/api/v1/user/register",
+        "https://mern-blog-backend-ha5m.onrender.com/api/v1/user/register",
         user,
         {
           headers: {

@@ -38,7 +38,7 @@ function YourBlogs() {
   const getownBlog = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:8000/api/v1/blog/get-own-blogs",
+        "https://mern-blog-backend-ha5m.onrender.com/api/v1/blog/get-own-blogs",
         { withCredentials: true }
       );
       if (res.data.success) {
@@ -52,7 +52,7 @@ function YourBlogs() {
   const deleteBlog = async (id) => {
     try {
       const res = await axios.delete(
-        `http://localhost:8000/api/v1/blog/delete/${id}`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/blog/delete/${id}`,
         { withCredentials: true }
       );
       const remainingBlog = blog.filter((singleBlog) => singleBlog?._id !== id);
