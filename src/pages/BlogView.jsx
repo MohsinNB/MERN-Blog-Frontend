@@ -30,6 +30,7 @@ function BlogView() {
   const { blog } = useSelector((store) => store.blog);
 
   const { user } = useSelector((store) => store.auth);
+  const { comment } = useSelector((store) => store.comment);
 
   const selectedBlog = blog.find((singleBlog) => singleBlog._id === blogId);
 
@@ -195,7 +196,7 @@ function BlogView() {
               </Button>
               <Button variant="ghost" size="sm">
                 <MessageSquare className="h-4 w-4" />
-                <span>1 Comments</span>
+                <span>{comment.length} Comments</span>
               </Button>
             </div>
             <div className="flex items-center space-x-2">
