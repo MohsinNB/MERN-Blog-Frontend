@@ -6,15 +6,17 @@ import BlogCardList from "../BlogCard/BlogCardList";
 import { Badge } from "../ui/badge";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
 
 function RecentBlogs() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { blog } = useSelector((store) => store.blog);
   useEffect(() => {
     const getAllPublishedBlogs = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/v1/blog/get-published-blogs`,
+          `https://mern-blog-backend-ha5m.onrender.com/api/v1/blog/get-published-blogs`,
           { withCredentials: true }
         );
         if (res.data.success) {
@@ -54,7 +56,11 @@ function RecentBlogs() {
               "Sports",
             ].map((item, index) => {
               return (
-                <Badge className="cursor-pointer hover:bg-gray-400" key={index}>
+                <Badge
+                  onClick={() => navigate(`/search?q=${item}`)}
+                  className="cursor-pointer hover:bg-gray-400"
+                  key={index}
+                >
                   {item}
                 </Badge>
               );

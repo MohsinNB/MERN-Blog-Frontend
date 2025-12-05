@@ -7,7 +7,7 @@ function PopularAuthors() {
   const getAllUsers = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/v1/user/all-users`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/user/all-users`,
         {
           withCredentials: true,
         }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo.png";
 import { Input } from "../ui/input";
@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../redux/themeSlice";
 import { logOuthandler } from "../../utils/logoutHandler";
 import { User, FileText, MessageSquare, PenLine } from "lucide-react";
+import { HiMenuAlt1, HiMenuAlt3 } from "react-icons/hi";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,14 +22,28 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import userLogo from "../../assets/user.jpg";
+import ResponsiveMenu from "../ResponsiveMenu/ResponsiveMenu";
+import { getInitials } from "@/utils/profileFallback";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
   const { theme } = useSelector((store) => store.theme);
+  const toggleNav = () => {
+    setOpenNav(!openNav);
+  };
 
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [openNav, setOpenNav] = useState(false);
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim() !== "") {
+      navigate(`/search?q=${encodeURIComponent(searchTerm)}`);
+      setSearchTerm("");
+    }
+  };
 
   return (
     <div className="py-2 fixed w-full dark:bg-gray-800 dark:border-b-gray-600 border-b-gray-300 border-2 bg-white z-50">
@@ -48,9 +64,11 @@ const Navbar = () => {
             <Input
               type="text"
               placeholder="search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="border border-gray-700 dark:bg-gray-900 bg-gray-300 w-[300px] hidden md:block"
             />
-            <Button className="absolute right-0 top-0">
+            <Button onClick={handleSearch} className="absolute right-0 top-0">
               <Search />
             </Button>
           </div>
@@ -80,7 +98,7 @@ const Navbar = () => {
                       <AvatarImage
                         src={user.photoUrl ? user.photoUrl : userLogo}
                       />
-                      <AvatarFallback>Picture</AvatarFallback>
+                      <AvatarFallback>{getInitials(user)}</AvatarFallback>
                     </Avatar>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
@@ -113,6 +131,7 @@ const Navbar = () => {
                 </DropdownMenu>
 
                 <Button
+                  className="hidden md:block"
                   onClick={() => {
                     logOuthandler(dispatch, navigate);
                   }}
@@ -131,7 +150,17 @@ const Navbar = () => {
               </div>
             )}
           </div>
+          {openNav ? (
+            <HiMenuAlt3 className="h-7 w-7 md:hidden" onClick={toggleNav} />
+          ) : (
+            <HiMenuAlt1 className="h-7 w-7 md:hidden" onClick={toggleNav} />
+          )}
         </nav>
+        <ResponsiveMenu
+          openNav={openNav}
+          setOpenNav={setOpenNav}
+          logOuthandler={logOuthandler}
+        />
       </div>
     </div>
   );

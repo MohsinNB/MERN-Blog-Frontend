@@ -36,7 +36,7 @@ const CreateBlogs = () => {
     try {
       dispatch(setLoading(true));
       const res = await axios.post(
-        `http://localhost:8000/api/v1/blog/`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/blog/`,
         { title, category },
         {
           headers: {

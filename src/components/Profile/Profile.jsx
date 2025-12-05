@@ -23,6 +23,7 @@ import { setLoading, setUser } from "@/redux/authSlice";
 import axios from "axios";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import TotalProperty from "../totalProperty/TotalProperty";
 
 function Profile() {
   const [open, setOpen] = useState(false);
@@ -74,7 +75,7 @@ function Profile() {
       dispatch(setLoading(true));
       // console.log("axios start");
       const res = await axios.put(
-        `http://localhost:8000/api/v1/user/profile/update`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/user/profile/update`,
         formData,
         {
           headers: {
@@ -279,6 +280,7 @@ function Profile() {
           </div>
         </Card>
       </div>
+      <TotalProperty />
     </div>
   );
 }

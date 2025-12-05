@@ -74,7 +74,7 @@ const UpdateBlog = () => {
     try {
       dispatch(setLoading(true));
       const res = await axios.put(
-        `http://localhost:8000/api/v1/blog/${blogId}`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/blog/${blogId}`,
         formData,
         {
           headers: {
@@ -98,7 +98,7 @@ const UpdateBlog = () => {
   const togglePublishUnpublish = async () => {
     try {
       const res = await axios.patch(
-        `http://localhost:8000/api/v1/blog/${blogId}`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/blog/${blogId}`,
         {
           // params: {
           //   action,
@@ -122,7 +122,7 @@ const UpdateBlog = () => {
   const deleteBlog = async () => {
     try {
       const res = await axios.delete(
-        `http://localhost:8000/api/v1/blog/delete/${blogId}`,
+        `https://mern-blog-backend-ha5m.onrender.com/api/v1/blog/delete/${blogId}`,
         { withCredentials: true }
       );
       const remainingBlog = blog.filter(
@@ -136,8 +136,8 @@ const UpdateBlog = () => {
     }
   };
   return (
-    <div className="md: ml-80 pt-20 px-3 pb-10 ">
-      <div className="max-w-6x1 mx-auto mt-8">
+    <div className="md:ml-80 pt-20 px-3 pb-10">
+      <div className="max-w-6xl mx-auto mt-8">
         <Card className="w-full bg-white dark:bg-gray-800 p-5 -space-y-4">
           <h1 className="text-4xl font-bold">Basic Blog Information</h1>
           <p>

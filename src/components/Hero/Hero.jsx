@@ -17,10 +17,10 @@ const Hero = () => {
             development, digital marketing, and tech innovations.
           </p>
           <div className="flex space-x-4">
-            <Link>
+            <Link to={"/dashboard/create-blog"}>
               <Button className="text-lg">Get started</Button>
             </Link>
-            <Link>
+            <Link to={"/about"}>
               <Button
                 variant="outline"
                 className="border-white px-6 py-3 text-lg"

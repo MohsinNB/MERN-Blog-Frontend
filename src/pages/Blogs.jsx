@@ -11,7 +11,7 @@ const Blogs = () => {
     const getAllPublishedBlogs = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/v1/blog/get-published-blogs`,
+          `https://mern-blog-backend-ha5m.onrender.com/api/v1/blog/get-published-blogs`,
           { withCredentials: true }
         );
         if (res.data.success) {
@@ -25,7 +25,7 @@ const Blogs = () => {
     getAllPublishedBlogs();
   }, []);
   return (
-    <div className="pt-16 h-screen">
+    <div className="pt-16 md:h-screen">
       <div className="max-w-6x1 mx-auto text-center flex flex-col space-y-4 items-center">
         <h1 className="text-4x1 font-bold text-center pt-10">Our Blogs</h1>
         <hr className="w-24 text-center border-2 border-red-500 rounded-full" />
