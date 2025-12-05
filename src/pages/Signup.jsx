@@ -38,7 +38,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user);
+
     try {
       dispatch(setLoading(true));
       const res = await axios.post(

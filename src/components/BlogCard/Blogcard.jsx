@@ -4,7 +4,6 @@ import { Button } from "../ui/button";
 import { formatDate } from "@/utils/handleDate";
 
 function Blogcard({ blog }) {
-  console.log(blog);
   const navigate = useNavigate();
 
   return (

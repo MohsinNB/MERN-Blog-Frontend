@@ -34,7 +34,6 @@ function Comments() {
   useEffect(() => {
     getAllComments();
   }, []);
-  console.log(allComments);
   return (
     <div className="pb-10 pt-20 md:ml-80 h-screen">
       <div className="max-w-6xl mx-auto mt-8">

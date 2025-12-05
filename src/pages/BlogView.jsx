@@ -26,14 +26,13 @@ function BlogView() {
   // It's a blogview section. so everything logic here is for one particular data that I get from DB.
   const params = useParams();
   const blogId = params.blogId;
-  // console.log(blogId);
 
   const { blog } = useSelector((store) => store.blog);
-  // console.log(blog, "from blogview");
+
   const { user } = useSelector((store) => store.auth);
-  // console.log(user);
+
   const selectedBlog = blog.find((singleBlog) => singleBlog._id === blogId);
-  // console.log("selectedBlog in blogview", selectedBlog);
+
   const dispatch = useDispatch();
 
   const [blogLike, setBlogLike] = useState(selectedBlog?.likes?.length || 0);
@@ -50,7 +49,7 @@ function BlogView() {
           text: "Read this amazing blog post",
           url: blogUrl,
         })
-        .then(() => console.log("Blog shared successfully"))
+        .then(() => toast.success("Blog shared successfully"))
         .catch((err) => console.error(err));
     } else {
       // fall back copy to clipboard

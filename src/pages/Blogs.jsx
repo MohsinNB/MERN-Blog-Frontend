@@ -16,7 +16,6 @@ const Blogs = () => {
         );
         if (res.data.success) {
           dispatch(setBlog(res.data.blogs));
-          console.log(res.data.blogs);
         }
       } catch (error) {
         console.log(error);

@@ -29,7 +29,7 @@ const UpdateBlog = () => {
   const blogId = params.blogId;
   const { blog, loading } = useSelector((store) => store.blog);
   const dispatch = useDispatch();
-  console.log("from updateBlog", blog);
+
   const findBlog = blog.find((blog) => blog._id === blogId);
   const [content, setContent] = useState(findBlog.description);
   const [publish, setPublish] = useState(false);
@@ -86,7 +86,6 @@ const UpdateBlog = () => {
 
       if (res.data.success) {
         toast.success(res.data.message);
-        console.log(blogData);
       }
     } catch (error) {
       console.log(error);
@@ -143,7 +142,7 @@ const UpdateBlog = () => {
           <p>
             Make changes to your blogs here. Click publish when you are done
           </p>
-          {console.log(publish)}
+
           <div className="space-x-2">
             <Button
               onClick={() => {

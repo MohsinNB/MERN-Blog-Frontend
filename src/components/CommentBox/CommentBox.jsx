@@ -21,14 +21,13 @@ import {
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 function CommentBox({ selectedBlog }) {
-  // console.log("selectedBlog", selectedBlog);
   const { user } = useSelector((store) => store.auth);
   const { blog } = useSelector((store) => store.blog);
   const { comment } = useSelector((store) => store.comment);
   const [content, setContent] = useState("");
   const [editedCommentId, setEditedCommentId] = useState(null);
   const [editedContent, setEditedContent] = useState("");
-  // console.log("cmn", comment);
+
   const dispatch = useDispatch();
 
   const changeEventHandler = (e) => {
@@ -184,7 +183,7 @@ function CommentBox({ selectedBlog }) {
                       <AvatarImage src={Item.userId?.photoUrl} />
                       <AvatarFallback>{getInitials(user)}</AvatarFallback>
                     </Avatar>
-                    {console.log(Item)}
+
                     <div className="mb-2 space-y-1 md:w-[400px]">
                       <h1 className="font-semibold">
                         {Item.userId?.firstName} {Item?.userId?.lastName}{" "}

@@ -46,7 +46,6 @@ function TotalProperty() {
         { withCredentials: true }
       );
       if (res.data.success) {
-        console.log(res.data.totalLikes, "from total Likes");
         setTotalLikes(res.data.totalLikes);
       }
     } catch (error) {

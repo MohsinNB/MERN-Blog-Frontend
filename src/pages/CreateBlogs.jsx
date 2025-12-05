@@ -29,8 +29,6 @@ const CreateBlogs = () => {
     setCategory(value);
   };
   const { blog, loading } = useSelector((store) => store.blog);
-  console.log(loading); //true
-  console.log(blog);
 
   const createBlogHandler = async () => {
     try {

@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 function SearchList() {
   const location = useLocation();
   const { blog } = useSelector((store) => store.blog);
-  console.log(blog);
+
   const query = new URLSearchParams(location.search).get("q")?.toLowerCase();
 
   const filteredBlogs = blog.filter((item) => {
