@@ -3,7 +3,7 @@ import aboutImg from "../assets/About-blog.avif";
 
 const About = () => {
   return (
-    <div className=" min-h-screen pt-28 px-4 md:px-0 mb-7 ">
+    <div className="min-h-screen pt-28 px-4 md:px-0 mb-7 ">
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
         <div className="text-center">
