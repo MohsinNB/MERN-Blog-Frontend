@@ -11,7 +11,11 @@ function Blogcard({ blog }) {
       className="bg-white dark:bg-gray-800 dark :border-gray-600 p-5 rounded-2x1 shadow-lg border hover:scale-105
 transition-all"
     >
-      <img src={blog.thumbnail} alt="" className="rounded-lg" />
+      <img
+        src={blog.thumbnail}
+        alt=""
+        className="w-full max-w-[600px] h-auto rounded-xl object-cover mx-auto"
+      />
       <p className="text-sm mt-2">
         By {blog.author.firstName} | {blog.category} |{" "}
         {formatDate(blog.createdAt)}
