@@ -28,7 +28,6 @@ import TotalProperty from "../totalProperty/TotalProperty";
 function Profile() {
   const [open, setOpen] = useState(false);
   const { user, loading } = useSelector((store) => store.auth);
-  // console.log("Loading from Redux:", loading);
 
   const [input, setInput] = useState({
     firstName: user?.firstName,
@@ -53,12 +52,11 @@ function Profile() {
 
   const changeFileHandler = (e) => {
     setInput({ ...input, file: e.target.files?.[0] });
-    console.log(e);
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(input);
+
     const formData = new FormData();
     formData.append("firstName", input.firstName);
     formData.append("lastName", input.lastName);
@@ -73,7 +71,7 @@ function Profile() {
     }
     try {
       dispatch(setLoading(true));
-      // console.log("axios start");
+
       const res = await axios.put(
         `https://mern-blog-backend-ha5m.onrender.com/api/v1/user/profile/update`,
         formData,
@@ -84,7 +82,7 @@ function Profile() {
           withCredentials: true,
         }
       );
-      // console.log("axios success");
+
       if (res.data.success) {
         setOpen(false);
         toast.success(res.data.message);

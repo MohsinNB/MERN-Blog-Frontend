@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 
 function ResponsiveMenu({ openNav, setOpenNav, logOutHandler }) {
   const { user } = useSelector((store) => store.auth);
-  console.log(user);
+
   return (
     <div
       className={`${
